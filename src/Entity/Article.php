@@ -7,23 +7,43 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ArticleRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get' => [
+            'normalization_context' => ['groups' => ['article_read']]
+        ],
+        'post'
+    ],
+    itemOperations: [
+        'get' => [
+            'normalization_context' => ["groups" => ['article_details_read']]
+        ],
+        'put',
+        'patch',
+        'delete'
+
+    ]
+)]
 class Article
 {
     use ResourceId;
     use Timestampable;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['article_read', 'article_details_read', 'user_details_read'])]
     private string $name;
 
     #[ORM\Column(type: 'text')]
+    #[Groups(['article_read', 'article_details_read', 'user_details_read'])]
     private string $content;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $author;
+    #[Groups(['article_details_read'])]
+    private ?User $author;
 
     public function __construct()
     {

@@ -9,19 +9,36 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get' => [
+            'normalization_context' => ['groups' => ['user_read']]
+        ],
+        'post'
+    ],
+    itemOperations: [
+        'get' => [
+            'normalization_context' => ["groups" => ['user_details_read']]
+        ],
+        'put',
+        'patch',
+        'delete'
+
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ResourceId;
     use Timestampable;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups(['user_read', 'user_details_read', 'article_details_read'])]
     private string $email;
 
     #[ORM\Column(type: 'json')]
@@ -31,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
+    #[Groups(['user_details_read'])]
     private Collection $articles;
 
     public function __construct()
