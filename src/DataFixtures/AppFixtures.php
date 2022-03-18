@@ -23,10 +23,12 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail($faker->email())
-//                ->setRoles(['ROLE_USER'])
-                ->setPassword($this->passwordHasher->hashPassword($user, 'password'))
-//                ->setUpdatedAt(new DateTimeImmutable())
-            ;
+                ->setPassword($this->passwordHasher->hashPassword($user, 'password'));
+
+            if ($i % 3 === 0) {
+                $user->setStatus(false)
+                    ->setAge(23);
+            }
 
             $manager->persist($user);
 

@@ -3,7 +3,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,6 +39,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['email' => 'partial'])]
+#[ApiFilter(DateFilter::class, properties: ['createdAt'])]
+#[ApiFilter(BooleanFilter::class, properties: ['status'])]
+#[ApiFilter(NumericFilter::class, properties: ['age'])]
+#[ApiFilter(ExistsFilter::class, properties: ['updatedAt'])]
+#[ApiFilter(OrderFilter::class, properties: ['id'], arguments: ['orderParameterName' => 'order'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ResourceId;
@@ -51,10 +64,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user_details_read'])]
     private Collection $articles;
 
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['user_read', 'user_details_read', 'article_details_read'])]
+    private bool $status;
+
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['user_read', 'user_details_read', 'article_details_read'])]
+    private int $age;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
+
+        $this->status = true;
+        $this->age = 18;
     }
 
     public function getEmail(): ?string
@@ -148,6 +172,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $article->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
 
         return $this;
     }

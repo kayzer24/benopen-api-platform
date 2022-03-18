@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ArticleUpdatedAtController;
 use App\Repository\ArticleRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
         'put',
         'patch',
-        'delete'
+        'delete',
+        'put_updated_at' => [
+            "method" => "PUT",
+            "path" => "/articles/{id}/updated-at",
+            "controller" => ArticleUpdatedAtController::class
+        ]
 
     ]
 )]
