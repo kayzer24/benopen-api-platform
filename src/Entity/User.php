@@ -104,6 +104,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * add this function to get usename for jwt service needs
+     *
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
      * @see UserInterface
      */
     public function getRoles(): array
