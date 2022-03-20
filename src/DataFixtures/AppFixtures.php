@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\User;
-use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -12,6 +11,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    const DEFAULT_USER = ['email' => 'kayzer24@test.fr', 'password' => 'password'];
+
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
     }
@@ -19,6 +20,12 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
+
+        $defaultUser = new User();
+        $defaultUser->setEmail(self::DEFAULT_USER['email'])
+            ->setPassword($this->passwordHasher->hashPassword($defaultUser, self::DEFAULT_USER['password']));
+
+        $manager->persist($defaultUser);
 
         for ($i = 0; $i < 10; $i++) {
             $user = new User();

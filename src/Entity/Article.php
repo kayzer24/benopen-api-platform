@@ -50,7 +50,7 @@ class Article
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['article_details_read'])]
-    private UserInterface $author;
+    private ?UserInterface $author;
 
     public function __construct()
     {
@@ -81,12 +81,12 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): UserInterface
+    public function getAuthor(): ?UserInterface
     {
         return $this->author;
     }
 
-    public function setAuthor(UserInterface $author): self
+    public function setAuthor(?UserInterface $author): self
     {
         $this->author = $author;
 

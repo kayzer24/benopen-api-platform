@@ -25,3 +25,32 @@ services:
     App\OpenApi\JwtDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: [ '@.inner' ]
+
+    miniblog.events.exception_subscriber:
+        class: App\Events\ExceptionSubscriber
+        arguments:
+            - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+
+
+    miniblog.normalizer.resource_access_exception:
+        class: App\Normalizer\ResourceAccessExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\ResourceAccessException' }
+        tags:
+            - { name: 'miniblog.normalizer' }
+
+    miniblog.normalizer.authentication_exception:
+        class: App\Normalizer\AuthenticationExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\AuthenticationException' }
+        tags:
+            - { name: 'miniblog.normalizer' }
+
+    miniblog.normalizer.authentication_not_found_exception:
+        class: App\Normalizer\NotFoundExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
+        tags:
+            - { name: 'miniblog.normalizer' }

@@ -16,9 +16,12 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -45,6 +48,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(NumericFilter::class, properties: ['age'])]
 #[ApiFilter(ExistsFilter::class, properties: ['updatedAt'])]
 #[ApiFilter(OrderFilter::class, properties: ['id'], arguments: ['orderParameterName' => 'order'])]
+#[UniqueEntity('email', message: "Email already used.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ResourceId;
@@ -52,12 +56,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Groups(['user_read', 'user_details_read', 'article_details_read'])]
+    #[NotBlank(message: "email is required")]
+    #[Email(message: 'Email format is invalid')]
     private string $email;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[NotBlank(message: "password is required")]
     private string $password;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
