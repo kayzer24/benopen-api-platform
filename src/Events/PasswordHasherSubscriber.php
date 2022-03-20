@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Events;
@@ -13,7 +14,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class PasswordHasherSubscriber implements EventSubscriberInterface
 {
-
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
     }
@@ -27,7 +27,7 @@ class PasswordHasherSubscriber implements EventSubscriberInterface
         }
     }
 
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [

@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Authorization;
 
@@ -17,13 +17,11 @@ class AuthenticationChecker implements AuthenticationCheckerInterface
     {
         $this->user = $security->getUser();
     }
+
     public function isAuthenticated(): void
     {
         if (null === $this->user) {
-            throw new AuthenticationException(
-                Response::HTTP_UNAUTHORIZED,
-                AuthenticationCheckerInterface::MESSAGE_ERROR
-            );
+            throw new AuthenticationException(Response::HTTP_UNAUTHORIZED, AuthenticationCheckerInterface::MESSAGE_ERROR);
         }
     }
 }

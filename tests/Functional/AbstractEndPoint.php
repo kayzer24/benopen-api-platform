@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
@@ -14,7 +14,7 @@ abstract class AbstractEndPoint extends WebTestCase
 {
     private array $serverInformation = [
         'ACCEPT' => 'application/json',
-        'CONTENT_TYPE' => 'application/json'
+        'CONTENT_TYPE' => 'application/json',
     ];
 
     protected string $tokenNotFound = 'JWT Token not found';
@@ -61,6 +61,7 @@ abstract class AbstractEndPoint extends WebTestCase
             $data = json_decode($client->getResponse()->getContent(), true);
 
             $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
+
             return $client;
         }
     }

@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Events;
 
@@ -21,7 +21,7 @@ class ResourceUpdatorSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::VIEW => ['check', EventPriorities::PRE_VALIDATE]
+            KernelEvents::VIEW => ['check', EventPriorities::PRE_VALIDATE],
         ];
     }
 

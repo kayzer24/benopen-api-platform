@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -15,23 +16,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['article_read']]
+            'normalization_context' => ['groups' => ['article_read']],
         ],
-        'post'
+        'post',
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ["groups" => ['article_details_read']]
+            'normalization_context' => ['groups' => ['article_details_read']],
         ],
         'put',
         'patch',
         'delete',
         'put_updated_at' => [
-            "method" => "PUT",
-            "path" => "/articles/{id}/updated-at",
-            "controller" => ArticleUpdatedAtController::class
-        ]
-
+            'method' => 'PUT',
+            'path' => '/articles/{id}/updated-at',
+            'controller' => ArticleUpdatedAtController::class,
+        ],
     ]
 )]
 class Article

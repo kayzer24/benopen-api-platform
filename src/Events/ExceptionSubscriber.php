@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Events;
 
@@ -20,19 +20,17 @@ class ExceptionSubscriber implements EventSubscriberInterface
     private static array $normalizers;
 
     public function __construct(
-        private SerializerInterface                   $serializer,
+        private SerializerInterface $serializer,
         private ExceptionNormalizerFormatterInterface $exceptionNormalizerFormatter,
-        private JsonResponseInterface                 $jsonResponse,
-
-    )
-    {
+        private JsonResponseInterface $jsonResponse,
+    ) {
     }
 
-    #[ArrayShape([KernelEvents::EXCEPTION => "array"])]
+    #[ArrayShape([KernelEvents::EXCEPTION => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::EXCEPTION => ['processException', 0]
+            KernelEvents::EXCEPTION => ['processException', 0],
         ];
     }
 
@@ -42,7 +40,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         /** @var Exception $exception */
         $exception = $event->getThrowable();
 
-        /** @var  NormalizerInterface $normalizer */
+        /** @var NormalizerInterface $normalizer */
         foreach (self::$normalizers as $normalizer) {
             if ($normalizer->supports($exception)) {
                 $result = $normalizer->normalize($exception);

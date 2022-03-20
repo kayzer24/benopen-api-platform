@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\DependencyInjection\Compiler;
 
@@ -10,7 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ExceptionNormalizerPass implements CompilerPassInterface
 {
-
     public function process(ContainerBuilder $container)
     {
         $exceptionListenerDefinition = $container->findDefinition('miniblog.events.exception_subscriber');

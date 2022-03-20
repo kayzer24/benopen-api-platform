@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -28,18 +29,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['user_read']]
+            'normalization_context' => ['groups' => ['user_read']],
         ],
-        'post'
+        'post',
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ["groups" => ['user_details_read']]
+            'normalization_context' => ['groups' => ['user_details_read']],
         ],
         'put',
         'patch',
-        'delete'
-
+        'delete',
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['email' => 'partial'])]
@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiFilter(NumericFilter::class, properties: ['age'])]
 #[ApiFilter(ExistsFilter::class, properties: ['updatedAt'])]
 #[ApiFilter(OrderFilter::class, properties: ['id'], arguments: ['orderParameterName' => 'order'])]
-#[UniqueEntity('email', message: "Email already used.")]
+#[UniqueEntity('email', message: 'Email already used.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ResourceId;
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Groups(['user_read', 'user_details_read', 'article_details_read'])]
-    #[NotBlank(message: "email is required")]
+    #[NotBlank(message: 'email is required')]
     #[Email(message: 'Email format is invalid')]
     private string $email;
 
@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
-    #[NotBlank(message: "password is required")]
+    #[NotBlank(message: 'password is required')]
     private string $password;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
@@ -111,9 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * add this function to get usename for jwt service needs
-     *
-     * @return string
+     * add this function to get usename for jwt service needs.
      */
     public function getUsername(): string
     {

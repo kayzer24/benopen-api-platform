@@ -11,7 +11,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    const DEFAULT_USER = ['email' => 'kayzer24@test.fr', 'password' => 'password'];
+    public const DEFAULT_USER = ['email' => 'kayzer24@test.fr', 'password' => 'password'];
 
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
@@ -27,19 +27,19 @@ class AppFixtures extends Fixture
 
         $manager->persist($defaultUser);
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = new User();
             $user->setEmail($faker->email())
                 ->setPassword($this->passwordHasher->hashPassword($user, 'password'));
 
-            if ($i % 3 === 0) {
+            if (0 === $i % 3) {
                 $user->setStatus(false)
                     ->setAge(23);
             }
 
             $manager->persist($user);
 
-            for ($a = 0; $a < rand(5, 15); $a++) {
+            for ($a = 0; $a < rand(5, 15); ++$a) {
                 $article = (new Article())
                     ->setName($faker->text(50))
                     ->setContent($faker->text(300))

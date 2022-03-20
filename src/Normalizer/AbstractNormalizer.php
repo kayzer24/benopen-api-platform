@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Normalizer;
 
@@ -12,7 +12,8 @@ abstract class AbstractNormalizer implements NormalizerInterface
     public function __construct(
         private array $exceptionTypes,
         protected ExceptionNormalizerFormatterInterface $exceptionNormalizerFormatter
-    ) {}
+    ) {
+    }
 
     public function supports(Exception $exception): bool
     {

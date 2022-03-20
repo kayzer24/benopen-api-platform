@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Events;
@@ -15,7 +16,6 @@ use Symfony\Component\Security\Core\Security;
 
 class CurrentUserForArticlesSubscriber implements EventSubscriberInterface
 {
-
     public function __construct(private Security $security)
     {
     }
@@ -33,7 +33,7 @@ class CurrentUserForArticlesSubscriber implements EventSubscriberInterface
         }
     }
 
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [

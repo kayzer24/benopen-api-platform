@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Authorization;
 
@@ -21,10 +21,7 @@ class ResourceAccessChecker implements ResourceAccessCheckerInterface
     public function canAccess(?int $id): void
     {
         if ($this->user->getId() !== $id) {
-            throw new ResourceAccessException(
-                Response::HTTP_UNAUTHORIZED,
-                ResourceAccessCheckerInterface::MESSAGE_ERROR
-            );
+            throw new ResourceAccessException(Response::HTTP_UNAUTHORIZED, ResourceAccessCheckerInterface::MESSAGE_ERROR);
         }
     }
 }

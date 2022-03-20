@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleTest extends AbstractEndPoint
 {
     private string $articlePayload = '{"name": "%s", "content": "%s", "author": "%s"}';
+
     public function testArticles(): void
     {
         $response = $this->getResponseFromRequest(

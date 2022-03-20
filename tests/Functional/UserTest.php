@@ -53,7 +53,7 @@ class UserTest extends AbstractEndPoint
             Request::METHOD_GET,
             '/api/users',
             '',
-            ["email" => AppFixtures::DEFAULT_USER['email']],
+            ['email' => AppFixtures::DEFAULT_USER['email']],
             false
         );
 
@@ -119,7 +119,7 @@ class UserTest extends AbstractEndPoint
         self::assertNotEmpty($responseDecoded);
     }
 
-    private function getPayload():string
+    private function getPayload(): string
     {
         $faker = Factory::create();
 

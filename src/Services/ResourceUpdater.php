@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services;
@@ -19,7 +20,8 @@ class ResourceUpdater implements ResourceUpdaterInterface
     public function __construct(
         private ResourceAccessCheckerInterface $resourceAccessChecker,
         private AuthenticationCheckerInterface $authenticationChecker
-    ) {}
+    ) {
+    }
 
     public function process(string $method, UserInterface $user): bool
     {
