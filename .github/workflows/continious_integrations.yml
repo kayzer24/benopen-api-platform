@@ -14,7 +14,7 @@ jobs:
             JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
             JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
             JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
-            JWT_TTL: ${{ JWT_TTL }}
+            JWT_TTL: ${{ secrets.JWT_TTL }}
 
         steps:
             - name: Checkout
