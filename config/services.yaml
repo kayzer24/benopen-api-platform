@@ -54,3 +54,6 @@ services:
             - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
         tags:
             - { name: 'miniblog.normalizer' }
+    App\DataPersister\Article:
+        bind:
+            $decorated: '@api_platform.doctrine.orm.data_persister'

@@ -21,7 +21,10 @@ class AuthenticationChecker implements AuthenticationCheckerInterface
     public function isAuthenticated(): void
     {
         if (null === $this->user) {
-            throw new AuthenticationException(Response::HTTP_UNAUTHORIZED, AuthenticationCheckerInterface::MESSAGE_ERROR);
+            throw new AuthenticationException(
+                Response::HTTP_UNAUTHORIZED,
+                AuthenticationCheckerInterface::MESSAGE_ERROR
+            );
         }
     }
 }
