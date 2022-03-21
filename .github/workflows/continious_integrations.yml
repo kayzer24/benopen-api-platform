@@ -9,6 +9,13 @@ jobs:
             matrix:
                 operating-system: [ubuntu-latest]
                 php-versions: ['8.1']
+
+        env:
+            JWT_SECRET_KEY: ${{ JWT_SECRET_KEY }}
+            JWT_PUBLIC_KEY: ${{ JWT_PUBLIC_KEY }}
+            JWT_PASSPHRASE: ${{ JWT_PASSPHRASE }}
+            JWT_TTL: ${{ JWT_TTL }}
+
         steps:
             - name: Checkout
               uses: actions/checkout@v2
