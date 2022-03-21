@@ -32,7 +32,7 @@ abstract class AbstractEndPoint extends WebTestCase
 
         $client->request(
             $method,
-            $uri . '.json',
+            $uri.'.json',
             $parameter,
             [],
             $this->serverInformation,
